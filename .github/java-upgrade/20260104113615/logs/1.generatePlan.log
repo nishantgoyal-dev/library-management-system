@@ -1,7 +1,0 @@
-2026-01-04T11:36:15.057Z [INFO] Initializing project configuration...
-2026-01-04T11:36:15.058Z [INFO] Project c:\Users\aafat\OneDrive\Desktop\JavaProjects\library_management_system is a maven project, try to get java version from pom.xml
-2026-01-04T11:36:15.064Z [INFO] Project java version: 7
-2026-01-04T11:36:15.064Z [INFO] Maven project detected.
-2026-01-04T11:36:15.065Z [INFO] Build tool type: mvn
-2026-01-04T11:36:15.073Z [ERROR] JDK is not provided or detected for Java 7.
-2026-01-04T12:54:05.643Z [ERROR] Failed to prepare project configuration or init upgrade options: Canceled.

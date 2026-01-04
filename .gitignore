@@ -1,14 +1,7 @@
-
 target/
-
-
+.github/
 .vscode/
 .settings/
 .project
 .classpath
-.factorypath
-bin/
-
-
-Thumbs.db
-.DS_Store
+*.class
