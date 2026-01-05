@@ -1,6 +1,5 @@
 package com.librarymanagement;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,13 @@ public class MemberDAO {
     }
 
     public Member findByID(long id) {
-        return em.find(Member.class, id);
+        Member member = em.find(Member.class, id);
+        if (member != null) {
+            System.out.println("Member found: " + member.getFullName());
+        } else {
+            System.out.println("Member not found!");
+        }
+        return member;
     }
 
     public void updateMember(long id, String name, String email) {
@@ -95,7 +100,7 @@ public class MemberDAO {
 
             List<Member> memberList = em
                     .createQuery(" SELECT m FROM Member m WHERE (m.fullName LIKE :name) ", Member.class)
-                    .setParameter("name","%"+ name+"%").getResultList();
+                    .setParameter("name", "%" + name + "%").getResultList();
             return memberList;
         } catch (Exception e) {
             System.out.println("Error searching for members: " + e.getMessage());
