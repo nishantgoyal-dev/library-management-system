@@ -22,7 +22,7 @@ public class LoanDAO {
     public void issueBook(long memberId, long bookId) {
         Member member = em.find(Member.class, memberId);
         if (member == null) {
-            System.out.println("incorrect member ID !");
+            System.out.println("Incorrect member ID !");
             return;
         }
         Book book = em.find(Book.class, bookId);
@@ -72,8 +72,8 @@ public class LoanDAO {
             book.setAvailable(true);
             loan.setReturnDate(LocalDate.now());
             long daysBetween = ChronoUnit.DAYS.between(loan.getIssueDate(), loan.getReturnDate());
-            long overdueDays = daysBetween - 15;
             if (daysBetween > 15) {
+                long overdueDays = daysBetween - 15;
                 System.out.println("Book is late by " + overdueDays + " days.");
                 System.out.println("Overdue fine will be : " + overdueDays * 10 + "₹");
             }

@@ -14,7 +14,7 @@ public class BookDAO {
     public void addBook(String name, String isbn, long author_id) {
         Author author = em.find(Author.class, author_id);
         if (author == null) {
-            System.out.println("Wrong author ID!");
+            System.out.println("Incorrect author ID!");
             return;
         }
         Book book = new Book();
@@ -46,7 +46,7 @@ public class BookDAO {
     public void updateBook(long id, String title, String isbn, long author_id) {
         Author author = em.find(Author.class, author_id);
         if (author == null) {
-            System.out.println("Wrong author ID!");
+            System.out.println("Incorrect author ID!");
             return;
         }
         Book book = em.find(Book.class, id);
@@ -71,6 +71,10 @@ public class BookDAO {
 
     public void deleteBook(long id) {
         Book book = findByID(id);
+        if (book==null) {
+            System.out.println("Enter correct book id!");
+            return;
+        }
         if (!book.isAvailable()) {
             System.out.println("Book is borrowed by some one, can't delete now! ");
             return;
@@ -106,6 +110,10 @@ public class BookDAO {
     }
 
     public Book findByIsbn(String isbn) {
+        if (isbn.isEmpty()||isbn==null) {
+            System.out.println("isbn string is null or empty");
+            return null;
+        }
         try {
             return em.createQuery("SELECT b FROM Book b WHERE b.isbn = :field1", Book.class)
                     .setParameter("field1", isbn)
@@ -128,7 +136,7 @@ public class BookDAO {
     public boolean isBookAvailable(long id) {
         Book book = em.find(Book.class, id);
         if (book == null) {
-            System.out.println("Wrong book id!");
+            System.out.println("Incorrect book id!");
             return false;
         }
         return book.isAvailable();

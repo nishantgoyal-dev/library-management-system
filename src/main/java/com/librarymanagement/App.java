@@ -99,7 +99,7 @@ public class App {
                             case "2": {// 2. Search Member by Name
                                 System.out.println("Enter the name : ");
                                 String name = sc.nextLine();
-                                System.out.println("--- MEMBERS FOUMND ---");
+                                System.out.println("--- MEMBERS FOUND ---");
                                 for (Member member : md.searchByName(name)) {
                                     System.out.println("Member ID : " + member.getId());
                                     System.out.println("Member name : " + member.getFullName());
@@ -117,7 +117,7 @@ public class App {
                                     System.out.println("Member not found");
                                     break;
                                 }
-                                System.out.println("--- MEMBER FOUMND ---");
+                                System.out.println("--- MEMBER FOUND ---");
                                 System.out.println("Member ID : " + member.getId());
                                 System.out.println("Member name : " + member.getFullName());
                                 System.out.println("Member email : " + member.getEmail());
@@ -184,7 +184,7 @@ public class App {
                                 for (Book book : bd.findByTitle(title)) {
                                     System.out.println("Book id : " + book.getId());
                                     System.out.println("Book title : " + book.getTitle());
-                                    System.out.println("Book isbn" + book.getIsbn());
+                                    System.out.println("Book isbn : " + book.getIsbn());
                                     System.out.println();
 
                                 }
@@ -194,7 +194,10 @@ public class App {
                                 System.out.println("Enter isbn : ");
                                 String isbn = sc.nextLine();
                                 Book book = bd.findByIsbn(isbn);
-                                System.out.println("--- BOOK FOUMND ---");
+                                if (book==null) {
+                                    break;
+                                }
+                                System.out.println("--- BOOK FOUND ---");
                                 System.out.println("Book id : " + book.getId());
                                 System.out.println("Book title : " + book.getTitle());
                                 System.out.println("Book isbn" + book.getIsbn());
@@ -269,7 +272,6 @@ public class App {
                                 System.out.println("Enter member ID : ");
                                 long memberId = sc.nextLong();
                                 sc.nextLine();
-                                md.getBorrowingHistory(memberId);
                                 System.out.println("Found history ! ");
                                 for (Loan loan : md.getBorrowingHistory(memberId)) {
                                     System.out.println("Loan id :" + loan.getId());
@@ -286,7 +288,7 @@ public class App {
                                 long bookId = sc.nextLong();
                                 sc.nextLine();
                                 System.out.println("Found history ! ");
-                                for (Loan loan : ld.getLoansByMember(bookId)) {
+                                for (Loan loan : ld.getLoansByBook(bookId)) {
                                     System.out.println("Loan id :" + loan.getId());
                                     System.out.println("Book " + loan.getBook().getTitle());
                                     System.out.println("Member : " + loan.getMember().getFullName());
