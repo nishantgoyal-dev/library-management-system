@@ -32,8 +32,3 @@ You can run it in the terminal and it gives you a menu to:
 * Writing JPQL queries (like searching with `LIKE %search%`).
 * Fixing the "Scanner" bug where it skips lines if you use `nextInt()` then `nextLine()`.
 * Handling `ManyToOne` relationships between books and authors.
-
-## To-Do List (Future updates)
-- [ ] Add a way to calculate fines for late books.
-- [ ] Make a "View All Authors" list so it's easier to find IDs.
-- [ ] Let one book have multiple authors.
