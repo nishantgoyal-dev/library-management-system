@@ -4,14 +4,11 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class InputValidator {
-    // static Scanner sc;
+
     private static final Scanner sc = new Scanner(System.in);
     //ai generated
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
-    InputValidator(){
-        // private static final Scanner sc = new Scanner(System.in);
-    }
     //ai generated
     private static final Pattern ISBN_PATTERN = Pattern.compile(
             "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");

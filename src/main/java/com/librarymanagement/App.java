@@ -1,7 +1,5 @@
 package com.librarymanagement;
 
-import java.util.Scanner;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -74,8 +72,6 @@ public class App {
         EntityManager em = emf.createEntityManager();
         System.out.println("Hello World!");
         String choice;
-        // Scanner sc = new Scanner(System.in);
-        // InputValidator ip = new InputValidator();
         MemberDAO md = new MemberDAO(em);
         AuthorDAO ad = new AuthorDAO(em);
         BookDAO bd = new BookDAO(em);
@@ -222,37 +218,25 @@ public class App {
                         choice = InputValidator.getNonEmptyString("selection : ");
                         switch (choice) {
                             case "1": {// 1. Issue Book (Checkout)
-                                // System.out.println("Enter member id : ");
                                 long memberId = InputValidator.getLongInput("Enter member id : ");
-                                // sc.nextLine();
-                                // System.out.println("Enter book id : ");
                                 long bookId = InputValidator.getLongInput("Enter book id : ");
-                                // sc.nextLine();
                                 ld.issueBook(memberId, bookId);
                                 break;
                             }
                             case "2": {// 2. Return Book (Check-in)
-                                // System.out.println("Enter loan id.");
                                 long loanId = InputValidator.getLongInput("Enter loan id : ");
-                                // sc.nextLine();
                                 ld.returnBook(loanId);
                                 break;
                             }
                             case "3": {// 3. Extend Loan Period
-                                // System.out.println("Enter loan id");
                                 long loanId = InputValidator.getLongInput("Enter loan id : ");
-                                // sc.nextLine();
-                                // System.out.println("Enter days to extend");
                                 long days = InputValidator.getLongInput("Enter days to extend: ");
-                                // sc.nextLine();
                                 ld.extendDueDate(loanId, days);
                                 break;
 
                             }
                             case "4": {// 4. View Member's Loan History
-                                // System.out.println("Enter member ID : ");
                                 long memberId = InputValidator.getLongInput("Enter member id : ");
-                                // sc.nextLine();
                                 System.out.println("Found history ! ");
                                 for (Loan loan : md.getBorrowingHistory(memberId)) {
                                     System.out.println("Loan id :" + loan.getId());
@@ -265,9 +249,7 @@ public class App {
 
                             }
                             case "5": {// 5. View Book's Loan History
-                                // System.out.println("Enter book id : ");
                                 long bookId = InputValidator.getLongInput("Enter book id : ");
-                                // sc.nextLine();
                                 System.out.println("Found history ! ");
                                 for (Loan loan : ld.getLoansByBook(bookId)) {
                                     System.out.println("Loan id :" + loan.getId());
