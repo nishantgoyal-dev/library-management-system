@@ -42,8 +42,11 @@ public class LoanDAO {
             loan.setIssueDate(LocalDate.now());
             loan.setDueDate(LocalDate.now().plusDays(15));
             book.setAvailable(false);
+            member.setBorrowedBooksCount(member.getBorrowedBooksCount()+1);
             em.persist(loan);
             em.merge(book);
+            em.merge(member);
+
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -74,8 +77,11 @@ public class LoanDAO {
                 System.out.println("Book is late by " + overdueDays + " days.");
                 System.out.println("Overdue fine will be : " + overdueDays * 10 + "₹");
             }
+            Member member =loan.getMember();
+            member.setBorrowedBooksCount(member.getBorrowedBooksCount()-1);
             em.merge(loan);
             em.merge(book);
+            em.merge(member);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -154,7 +160,7 @@ public class LoanDAO {
         }
         try {
             em.getTransaction().begin();
-            loan.setDueDate(loan.dueDate.plusDays(extraDays));
+            loan.setDueDate(loan.getDueDate().plusDays(extraDays));
             em.merge(loan);
             em.getTransaction().commit();
 

@@ -13,16 +13,16 @@ import jakarta.persistence.ManyToOne;
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
     @ManyToOne
     @JoinColumn(name = "book_id")
-    Book book;
+    private Book book;
     @ManyToOne
     @JoinColumn(name = "member_id")
-    Member member;
-    LocalDate issueDate;// The day it was borrowed.
-    LocalDate dueDate;// The day it must be returned.
-    LocalDate returnDate;// The actual day it was brought back (null until returned).
+    private Member member;
+    private LocalDate issueDate;// The day it was borrowed.
+    private LocalDate dueDate;// The day it must be returned.
+    private LocalDate returnDate;// The actual day it was brought back (null until returned).
 
     public long getId() {
         return id;

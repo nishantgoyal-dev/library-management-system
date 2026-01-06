@@ -71,7 +71,7 @@ public class BookDAO {
 
     public void deleteBook(long id) {
         Book book = findByID(id);
-        if (!book.isAvailable) {
+        if (!book.isAvailable()) {
             System.out.println("Book is borrowed by some one, can't delete now! ");
             return;
         }
@@ -131,7 +131,7 @@ public class BookDAO {
             System.out.println("Wrong book id!");
             return false;
         }
-        return book.isAvailable;
+        return book.isAvailable();
     }
 
     public long countTotalBooks() {

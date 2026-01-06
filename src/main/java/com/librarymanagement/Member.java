@@ -11,11 +11,11 @@ import jakarta.persistence.Id;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String fullName;
-    String email;
-    LocalDate membershipDate;
-    int borrowedBooksCount;
+    private long id;
+    private String fullName;
+    private String email;
+    private LocalDate membershipDate;
+    private int borrowedBooksCount;
 
     public long getId() {
         return id;

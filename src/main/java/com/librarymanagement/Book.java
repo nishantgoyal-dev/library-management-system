@@ -1,5 +1,6 @@
 package com.librarymanagement;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,13 +11,14 @@ import jakarta.persistence.ManyToOne;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String title;
-    String isbn;
+    private long id;
+    private String title;
+    @Column(unique = true, nullable = false)
+    private String isbn;
     @ManyToOne
     @JoinColumn(name = "author_id")
-    Author author;
-    boolean isAvailable;
+    private Author author;
+    private boolean isAvailable = true;
     public long getId() {
         return id;
     }

@@ -64,13 +64,7 @@ public class MemberDAO {
     }
 
     public Member findByID(long id) {
-        Member member = em.find(Member.class, id);
-        if (member != null) {
-            System.out.println("Member found: " + member.getFullName());
-        } else {
-            System.out.println("Member not found!");
-        }
-        return member;
+        return em.find(Member.class, id);
     }
 
     public void updateMember(long id, String name, String email) {
@@ -191,4 +185,14 @@ public class MemberDAO {
             return new ArrayList<>();
         }
     }
+
+    public long countTotalMembers() {
+    try {
+        return em.createQuery("SELECT COUNT(m) FROM Member m", Long.class)
+                 .getSingleResult();
+    } catch (Exception e) {
+        System.out.println("Error counting members: " + e.getMessage());
+        return 0;
+    }
+}
 }
