@@ -5,6 +5,7 @@ import java.util.Scanner;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import com.librarymanagement.util.InputValidator;;
 
 public class App {
     // Main Entry Point
@@ -73,32 +74,30 @@ public class App {
         EntityManager em = emf.createEntityManager();
         System.out.println("Hello World!");
         String choice;
-        Scanner sc = new Scanner(System.in);
+        // Scanner sc = new Scanner(System.in);
+        // InputValidator ip = new InputValidator();
         MemberDAO md = new MemberDAO(em);
         AuthorDAO ad = new AuthorDAO(em);
         BookDAO bd = new BookDAO(em);
         LoanDAO ld = new LoanDAO(em);
         outer: while (true) {
             System.out.println(mainMenu);
-            choice = sc.nextLine();
+            choice = InputValidator.getNonEmptyString("selection : ");
             switch (choice) {
                 case "1": {// 1. MEMBER MANAGEMENT
                     inner: while (true) {
                         System.out.println(memberMenu);
-                        choice = sc.nextLine();
+                        choice = InputValidator.getNonEmptyString("selection : ");
                         switch (choice) {
 
                             case "1": {// 1. Register New Member
-                                System.out.println("Enter the name : ");
-                                String name = sc.nextLine();
-                                System.out.println("Enter the email : ");
-                                String email = sc.nextLine();
+                                String name = InputValidator.getNonEmptyString( "Enter the name : ");
+                                String email = InputValidator.getValidEmail("Enter the email :");
                                 md.registerMember(name, email);
                                 break;
                             }
                             case "2": {// 2. Search Member by Name
-                                System.out.println("Enter the name : ");
-                                String name = sc.nextLine();
+                                String name = InputValidator.getNonEmptyString("Enter the name : ");
                                 System.out.println("--- MEMBERS FOUND ---");
                                 for (Member member : md.searchByName(name)) {
                                     System.out.println("Member ID : " + member.getId());
@@ -109,9 +108,7 @@ public class App {
                                 break;
                             }
                             case "3": {// 3. Find Member by ID
-                                System.out.println("Enter the ID :");
-                                long id = sc.nextLong();
-                                sc.nextLine();
+                                long id = InputValidator.getLongInput("Enter member id : ");
                                 Member member = md.findByID(id);
                                 if (member == null) {
                                     System.out.println("Member not found");
@@ -124,20 +121,14 @@ public class App {
                                 break;
                             }
                             case "4": {// 4. Update Member Info
-                                System.out.println("Enter the ID :");
-                                long id = sc.nextLong();
-                                sc.nextLine();
-                                System.out.println("Enter name : ");
-                                String name = sc.nextLine();
-                                System.out.println("Enter email : ");
-                                String email = sc.nextLine();
+                                long id = InputValidator.getLongInput("Enter the ID : ");
+                                String name = InputValidator.getNonEmptyString("Enter the new name : ");
+                                String email = InputValidator.getValidEmail("Enter email : ");
                                 md.updateMember(id, name, email);
                                 break;
                             }
                             case "5": {// 5. Delete Member
-                                System.out.println("Enter the ID :");
-                                long id = sc.nextLong();
-                                sc.nextLine();
+                                long id = InputValidator.getLongInput("Enter the ID : ");
                                 md.deleteMember(id);
                                 break;
                             }
@@ -156,30 +147,23 @@ public class App {
 
                     inner: while (true) {
                         System.out.println(inventoryMenu);
-                        choice = sc.nextLine();
+                        choice = InputValidator.getNonEmptyString("selection : ");
                         switch (choice) {
                             case "1": {// 1. Add New Author
-                                System.out.println("Enter Author name : ");
-                                String name = sc.nextLine();
-                                System.out.println("Enter authoe biography");
-                                String bio = sc.nextLine();
+                                String name = InputValidator.getNonEmptyString("Enter Author name : ");
+                                String bio = InputValidator.getNonEmptyString("Enter Author biography : ");
                                 ad.addAuthor(name, bio);
                                 break;
                             }
                             case "2": {// 2. Add New Book
-                                System.out.println("Enter book titile : ");
-                                String titile = sc.nextLine();
-                                System.out.println("Enter book isbn : ");
-                                String isbn = sc.nextLine();
-                                System.out.println("Enter add author id : ");
-                                long author_id = sc.nextLong();
-                                sc.nextLine();
+                                String titile = InputValidator.getNonEmptyString("Enter book title : ");
+                                String isbn = InputValidator.getValidISBN("Enter book isbn : ");
+                                long author_id = InputValidator.getLongInput("Enter author id : ");
                                 bd.addBook(titile, isbn, author_id);
                                 break;
                             }
                             case "3": {// 3. Search Books by Title
-                                System.out.println("Enter book titile");
-                                String title = sc.nextLine();
+                                String title = InputValidator.getNonEmptyString("Enter book title : ");
                                 System.out.println("--- BOOKS FOUND ---");
                                 for (Book book : bd.findByTitle(title)) {
                                     System.out.println("Book id : " + book.getId());
@@ -191,8 +175,7 @@ public class App {
                                 break;
                             }
                             case "4": {// 4. Find Book by ISBN
-                                System.out.println("Enter isbn : ");
-                                String isbn = sc.nextLine();
+                                String isbn = InputValidator.getValidISBN("Enter book isbn : ");
                                 Book book = bd.findByIsbn(isbn);
                                 if (book==null) {
                                     break;
@@ -205,9 +188,7 @@ public class App {
                                 break;
                             }
                             case "5": {// View Author's Catalog
-                                System.out.println("Enter author id : ");
-                                long id = sc.nextLong();
-                                sc.nextLine();
+                                long id = InputValidator.getLongInput("Enter author id : ");
                                 System.out.println("--- BOOKS FOUND ---");
                                 for (Book book : ad.getBooksByAuthor(id)) {
                                     System.out.println("Book id : " + book.getId());
@@ -238,40 +219,40 @@ public class App {
                 case "3": {// 3. LOAN OPERATIONS
                     inner: while (true) {
                         System.out.println(loanMenu);
-                        choice = sc.nextLine();
+                        choice = InputValidator.getNonEmptyString("selection : ");
                         switch (choice) {
                             case "1": {// 1. Issue Book (Checkout)
-                                System.out.println("Enter member id : ");
-                                long memberId = sc.nextLong();
-                                sc.nextLine();
-                                System.out.println("Enter book id : ");
-                                long bookId = sc.nextLong();
-                                sc.nextLine();
+                                // System.out.println("Enter member id : ");
+                                long memberId = InputValidator.getLongInput("Enter member id : ");
+                                // sc.nextLine();
+                                // System.out.println("Enter book id : ");
+                                long bookId = InputValidator.getLongInput("Enter book id : ");
+                                // sc.nextLine();
                                 ld.issueBook(memberId, bookId);
                                 break;
                             }
                             case "2": {// 2. Return Book (Check-in)
-                                System.out.println("Enter loan id.");
-                                long loanId = sc.nextLong();
-                                sc.nextLine();
+                                // System.out.println("Enter loan id.");
+                                long loanId = InputValidator.getLongInput("Enter loan id : ");
+                                // sc.nextLine();
                                 ld.returnBook(loanId);
                                 break;
                             }
                             case "3": {// 3. Extend Loan Period
-                                System.out.println("Enter loan id");
-                                long loanId = sc.nextLong();
-                                sc.nextLine();
-                                System.out.println("Enter days to extend");
-                                long days = sc.nextLong();
-                                sc.nextLine();
+                                // System.out.println("Enter loan id");
+                                long loanId = InputValidator.getLongInput("Enter loan id : ");
+                                // sc.nextLine();
+                                // System.out.println("Enter days to extend");
+                                long days = InputValidator.getLongInput("Enter days to extend: ");
+                                // sc.nextLine();
                                 ld.extendDueDate(loanId, days);
                                 break;
 
                             }
                             case "4": {// 4. View Member's Loan History
-                                System.out.println("Enter member ID : ");
-                                long memberId = sc.nextLong();
-                                sc.nextLine();
+                                // System.out.println("Enter member ID : ");
+                                long memberId = InputValidator.getLongInput("Enter member id : ");
+                                // sc.nextLine();
                                 System.out.println("Found history ! ");
                                 for (Loan loan : md.getBorrowingHistory(memberId)) {
                                     System.out.println("Loan id :" + loan.getId());
@@ -284,9 +265,9 @@ public class App {
 
                             }
                             case "5": {// 5. View Book's Loan History
-                                System.out.println("Enter book id : ");
-                                long bookId = sc.nextLong();
-                                sc.nextLine();
+                                // System.out.println("Enter book id : ");
+                                long bookId = InputValidator.getLongInput("Enter book id : ");
+                                // sc.nextLine();
                                 System.out.println("Found history ! ");
                                 for (Loan loan : ld.getLoansByBook(bookId)) {
                                     System.out.println("Loan id :" + loan.getId());
@@ -315,7 +296,7 @@ public class App {
                 case "4": {// 4. REPORTS & ALERTS
                     inner: while (true) {
                         System.out.println(reportsMenu);
-                        choice = sc.nextLine();
+                        choice = InputValidator.getNonEmptyString("selection : ");
                         switch (choice) {
                             case "1": {// 1. View All Overdue Books
                                 for (Loan loan : ld.findOverdueLoans()) {
@@ -378,7 +359,6 @@ public class App {
                     break;
             }
         }
-        sc.close();
         em.close();
         emf.close();
     }
